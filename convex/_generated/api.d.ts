@@ -11,6 +11,7 @@
 import type * as campaigns from "../campaigns.js";
 import type * as channel from "../channel.js";
 import type * as communications from "../communications.js";
+import type * as copilot from "../copilot.js";
 import type * as customers from "../customers.js";
 import type * as http from "../http.js";
 import type * as seed from "../seed.js";
@@ -26,6 +27,7 @@ declare const fullApi: ApiFromModules<{
   campaigns: typeof campaigns;
   channel: typeof channel;
   communications: typeof communications;
+  copilot: typeof copilot;
   customers: typeof customers;
   http: typeof http;
   seed: typeof seed;

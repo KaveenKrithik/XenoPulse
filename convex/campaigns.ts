@@ -52,7 +52,7 @@ export const generateVariants = action({
     segmentId: v.id("segments"),
     channel: v.string(),
   },
-  handler: async (ctx, args) => {
+  handler: async (ctx, args): Promise<any[]> => {
     if (!process.env.GROQ_API_KEY) {
       console.warn("GROQ_API_KEY not set. Using mock variants.");
       return [
@@ -115,7 +115,7 @@ export const generateMessage = action({
     segmentId: v.id("segments"),
     channel: v.string(),
   },
-  handler: async (ctx, args) => {
+  handler: async (ctx, args): Promise<string> => {
     if (!process.env.GROQ_API_KEY) {
       console.warn("GROQ_API_KEY not set. Using mock message.");
       return `Hey {{name}}, your favorite {{last_product}} is back in stock. Use {{discount_code}} for early access.`;
@@ -152,7 +152,7 @@ Do not include any other variables. The message must be ready to send.`;
 
 export const generateDebrief = action({
   args: { campaignId: v.id("campaigns") },
-  handler: async (ctx, args) => {
+  handler: async (ctx, args): Promise<string> => {
     if (!process.env.GROQ_API_KEY) {
       console.warn("GROQ_API_KEY not set. Using mock debrief.");
       const campaign = await ctx.runQuery(api.campaigns.get, { id: args.campaignId });
@@ -223,7 +223,7 @@ export const getDebrief = query({
 
 export const sendCampaign = action({
   args: { campaignId: v.id("campaigns") },
-  handler: async (ctx, args) => {
+  handler: async (ctx, args): Promise<void> => {
     await ctx.runMutation(api.campaigns.updateStatus, { id: args.campaignId, status: "sending" });
     
     const campaign = await ctx.runQuery(api.campaigns.get, { id: args.campaignId });

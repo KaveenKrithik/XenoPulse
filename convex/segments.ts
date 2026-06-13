@@ -53,7 +53,7 @@ export const evaluateFilter = query({
 
 export const generateSegmentFromIntent = action({
   args: { intent: v.string() },
-  handler: async (ctx, args) => {
+  handler: async (ctx, args): Promise<any> => {
     if (!process.env.GROQ_API_KEY) {
       console.warn("GROQ_API_KEY not set. Using mock segment logic.");
       const mockFilter = { tier: "vip", daysSinceLastOrder: 30 };

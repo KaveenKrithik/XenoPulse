@@ -1,5 +1,6 @@
 import Sidebar from "@/components/Sidebar";
 import CommandMenu from "@/components/CommandMenu";
+import Copilot from "@/components/Copilot";
 
 export default function DashboardLayout({
   children,
@@ -13,6 +14,7 @@ export default function DashboardLayout({
         {children}
       </main>
       <CommandMenu />
+      <Copilot />
     </div>
   );
 }

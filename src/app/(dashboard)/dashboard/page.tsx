@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 
 export default function Dashboard() {
-  const customerStats = useQuery(api.customers.getStats);
+  const customerStats = useQuery(api.customers.getDashboardStats);
   const recentCampaigns = useQuery(api.campaigns.list);
 
   return (
@@ -26,14 +26,14 @@ export default function Dashboard() {
         <div className="col-span-1 flex flex-col gap-6">
           <StatCard 
             title="Total Customers" 
-            value={customerStats ? customerStats.total.toLocaleString() : "..."}
+            value={customerStats ? customerStats.totalCustomers.toLocaleString() : "..."}
             icon={Users}
             trend="+12% this month"
             sparklineData={[30, 40, 35, 50, 49, 60, 70, 91, 100]}
           />
           <StatCard 
             title="Total Spend" 
-            value={customerStats ? `₹${customerStats.totalSpend.toLocaleString()}` : "..."}
+            value={customerStats ? `₹${customerStats.totalAttributed.toLocaleString()}` : "..."}
             icon={TrendingUp}
             trend="+8% this month"
             sparklineData={[40, 30, 45, 60, 55, 75, 70, 85, 100]}
