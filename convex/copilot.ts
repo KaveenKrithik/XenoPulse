@@ -18,9 +18,13 @@ export const ask = action({
 
     const campaigns = await ctx.runQuery(api.campaigns.list);
     const segments = await ctx.runQuery(api.segments.list);
+    const stats = await ctx.runQuery(api.customers.getDashboardStats);
     
     const contextStr = `
 CURRENT CRM STATE:
+Total Customers: ${stats.totalCustomers}
+Total Sales/Spend (Attributed): ₹${stats.totalAttributed}
+Average Open Rate: ${stats.avgOpenRate}%
 Campaigns: ${JSON.stringify(campaigns.map(c => ({ name: c.name, status: c.status, channel: c.channel, stats: c.stats, variants: c.variants?.map(v => ({name: v.name, stats: v.stats})) })))}
 Segments: ${JSON.stringify(segments.map(s => ({ name: s.name, count: s.customerIds.length })))}
 `;
