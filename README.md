@@ -2,10 +2,10 @@
 
 XenoPulse is a highly polished, AI-native campaign intelligence platform and dashboard built for internal use. It provides real-time analytics, variant testing capabilities, automated debriefs for marketing campaigns, and an intelligent copilot designed to interact directly with CRM data.
 
-## 🚀 Key Features Checklist
+## Key Features Checklist
 
 - [x] **Authentication Flow**
-  - Custom-animated authentication spinner using Framer Motion.
+  - Custom-animated authentication spinner utilizing Framer Motion.
   - Secure employee authentication simulation.
   - Sleek, monochromatic login screen.
 
@@ -19,13 +19,13 @@ XenoPulse is a highly polished, AI-native campaign intelligence platform and das
 - [x] **XenoPilot (AI CRM Assistant)**
   - Fully integrated, Notion-style AI assistant (`XenoPilot`).
   - **RAG Architecture**: Fetches live context from the Convex database (active campaigns, customer segments, stats) and securely injects it into the LLM context.
-  - Powered by **Groq API** (`llama-3.1-8b-instant`) for blazing fast, highly intelligent responses.
+  - Powered by **Groq API** (`llama-3.1-8b-instant`) for highly intelligent responses.
   - Minimalist geometric mascot and monochrome UI for a premium enterprise feel.
 
 - [x] **Global Navigation & Mobile Responsiveness**
   - **Command Menu (Cmd+K)**: Fully keyboard-accessible global search interface for rapid navigation.
   - **Mobile-First Layout**: Fully responsive off-canvas mobile sidebar with hamburger menu integration.
-  - Grid layouts, tables, and the XenoPilot chat interface seamlessly adapt to mobile screens (`[100dvh]`).
+  - Grid layouts, tables, and the XenoPilot chat interface seamlessly adapt to mobile screens.
 
 - [x] **Design System & Aesthetics**
   - Strict dark mode design system (`#050505` background).
@@ -33,9 +33,9 @@ XenoPulse is a highly polished, AI-native campaign intelligence platform and das
   - **Outfit** font family (Google Fonts) used exclusively for a geometric, premium appearance.
   - Extensive use of `framer-motion` for micro-interactions and smooth layout transitions.
 
-## 🏗 Architecture and Technologies
+## Architecture and Technologies
 
-The application is built on a modern, bleeding-edge React stack:
+The application is built on a modern React stack:
 
 *   **Frontend**: Next.js 15 (App Router, Server Components where applicable)
 *   **Backend**: Convex (Real-time backend-as-a-service with built-in TypeScript schema validation)
@@ -45,22 +45,114 @@ The application is built on a modern, bleeding-edge React stack:
 *   **Icons**: Lucide React
 *   **Alerts/Notifications**: Sonner
 
-## 📁 Project Structure
+## Database Schema (Convex ERD)
 
-*   `src/app/` - Next.js App Router structure.
-    *   `(dashboard)/` - Route group containing all authenticated dashboard pages (Campaigns, Customers, Segments).
-*   `src/components/` - Reusable UI components.
-    *   `Sidebar.tsx` - Responsive navigation sidebar.
-    *   `CommandMenu.tsx` - Cmd+K global search implementation.
-    *   `Copilot.tsx` - The XenoPilot AI chat interface.
-*   `convex/` - Backend logic, actions, and schemas.
-    *   `schema.ts` - Defines the data models for campaigns, variants, segments, and customers.
-    *   `campaigns.ts` - Database queries, mutations, and the AI debrief generation action.
-    *   `copilot.ts` - The backend RAG action that queries the CRM and streams context to Groq.
+Below is the Entity Relationship Diagram representing the core Convex database schema utilized by XenoPulse.
 
-## ⚙️ Setup and Installation
+```mermaid
+erDiagram
+    customers {
+        id string PK
+        name string
+        email string
+        phone string
+        city string
+        tier string
+        totalOrders number
+        totalSpend number
+        preferredChannel string
+    }
+
+    orders {
+        id string PK
+        customerId string FK
+        amount number
+        createdAt number
+        status string
+    }
+
+    segments {
+        id string PK
+        name string
+        description string
+        customerIds array
+        createdBy string
+    }
+
+    campaigns {
+        id string PK
+        name string
+        segmentId string FK
+        channel string
+        status string
+        stats object
+    }
+
+    communications {
+        id string PK
+        campaignId string FK
+        customerId string FK
+        channel string
+        variantId string
+        status string
+    }
+
+    campaignDebriefs {
+        id string PK
+        campaignId string FK
+        summary string
+        generatedAt number
+    }
+
+    customers ||--o{ orders : places
+    segments ||--|{ customers : contains
+    campaigns ||--|| segments : targets
+    campaigns ||--o{ communications : triggers
+    customers ||--o{ communications : receives
+    campaigns ||--o| campaignDebriefs : generates
+```
+
+## System Architecture
+
+The following diagram illustrates how the Next.js frontend interacts with the Convex backend and external APIs like Groq for AI functionality.
+
+```mermaid
+graph TD
+    subgraph Frontend [Next.js Client]
+        A[Dashboard UI]
+        B[XenoPilot Interface]
+        C[Campaign Variants]
+    end
+
+    subgraph Backend [Convex Serverless Functions]
+        D[Database Operations]
+        E[copilot.ask Action]
+        F[campaigns.generateDebrief Action]
+    end
+
+    subgraph External [External APIs]
+        G[Groq API llama-3.1]
+    end
+
+    A -->|Queries & Mutations| D
+    B -->|User Query| E
+    C -->|Trigger Debrief| F
+
+    E -->|Retrieve Context| D
+    E -->|RAG Payload| G
+    G -->|Streamed Response| E
+    E -->|AI Response| B
+
+    F -->|Process Variants| D
+    F -->|Analysis Prompt| G
+    G -->|Debrief Summary| F
+    F -->|Store Summary| D
+```
+
+## Setup and Installation
 
 1.  **Install Dependencies**
+    Execute the following command to install all required Node modules:
     ```bash
     npm install
     ```
@@ -76,11 +168,12 @@ The application is built on a modern, bleeding-edge React stack:
     ```
 
 4.  **Start Next.js Frontend**
+    Run the Next.js local development server:
     ```bash
     npm run dev
     ```
     Access the application at `http://localhost:3000`.
 
-## 🌐 Deployment
+## Deployment
 
 This application is configured for seamless deployment to **Vercel**. Simply push to the `main` branch, ensure your `NEXT_PUBLIC_CONVEX_URL` is set in Vercel's environment variables, and the `GROQ_API_KEY` is configured in your production Convex deployment.
