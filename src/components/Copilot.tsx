@@ -100,7 +100,7 @@ export default function Copilot() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
-            className="fixed bottom-6 right-6 w-[380px] h-[550px] bg-[#0A0A0A] border border-[#333] rounded-lg shadow-2xl flex flex-col overflow-hidden z-50"
+            className="fixed bottom-0 right-0 md:bottom-6 md:right-6 w-full h-[100dvh] md:w-[380px] md:h-[550px] bg-[#0A0A0A] md:border border-[#333] md:rounded-lg shadow-2xl flex flex-col overflow-hidden z-[60]"
           >
             {/* Header */}
             <div className="h-14 border-b border-[#333] flex items-center justify-between px-4 bg-[#0A0A0A]">

@@ -22,7 +22,7 @@ export default function Dashboard() {
         </Link>
       </div>
 
-      <div className="grid grid-cols-4 gap-6 mb-10">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-10">
         <div className="col-span-1 flex flex-col gap-6">
           <StatCard 
             title="Total Customers" 
@@ -40,7 +40,7 @@ export default function Dashboard() {
           />
         </div>
         
-        <div className="col-span-3 border border-white/10 rounded-lg bg-black relative overflow-hidden flex flex-col shadow-inner">
+        <div className="col-span-1 lg:col-span-3 border border-white/10 rounded-lg bg-black relative overflow-hidden flex flex-col shadow-inner">
           <div className="p-4 border-b border-white/10 flex justify-between items-center relative z-10 bg-white/[0.02]">
             <h3 className="text-sm font-medium text-[#EDEDED] flex items-center gap-2"><Terminal className="w-4 h-4 text-[#888888]" /> Raw Webhook Terminal</h3>
             <div className="flex items-center gap-2">
@@ -58,8 +58,8 @@ export default function Dashboard() {
       </div>
 
       <h3 className="text-sm font-medium text-white mb-4">Recent Campaigns</h3>
-      <div className="border border-white/10 rounded-lg bg-white/[0.02] backdrop-blur-md overflow-hidden">
-        <table className="w-full text-left text-sm">
+      <div className="border border-white/10 rounded-lg bg-white/[0.02] backdrop-blur-md overflow-x-auto">
+        <table className="w-full text-left text-sm whitespace-nowrap">
           <thead className="border-b border-white/10 text-[#888888] bg-black/50">
             <tr>
               <th className="px-5 py-4 font-normal">Campaign</th>

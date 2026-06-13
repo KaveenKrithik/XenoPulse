@@ -19,7 +19,7 @@ const OktaLogo = ({ className }: { className?: string }) => (
   </svg>
 );
 
-export default function Sidebar() {
+export default function Sidebar({ onClose }: { onClose?: () => void }) {
   const pathname = usePathname();
 
   const links = [
@@ -83,6 +83,7 @@ export default function Sidebar() {
                 <Link
                   key={link.name}
                   href={link.href}
+                  onClick={() => { if (onClose) onClose(); }}
                   className={`flex items-center gap-3 px-3 py-1.5 rounded-md transition-all text-[13px] relative ${
                     isActive
                       ? "bg-[#6633cc]/10 text-[#a78bfa] font-medium shadow-sm border border-[#6633cc]/20"
