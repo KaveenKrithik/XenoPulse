@@ -4,6 +4,7 @@ import { useState } from "react";
 import Sidebar from "@/components/Sidebar";
 import CommandMenu from "@/components/CommandMenu";
 import Copilot from "@/components/Copilot";
+import OnboardingTour from "@/components/OnboardingTour";
 import { Menu, X } from "lucide-react";
 
 export default function DashboardLayout({
@@ -51,6 +52,7 @@ export default function DashboardLayout({
       
       <CommandMenu />
       <Copilot />
+      <OnboardingTour />
     </div>
   );
 }

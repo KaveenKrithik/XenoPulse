@@ -81,16 +81,21 @@ export default function Copilot() {
   return (
     <>
       {/* Floating Action Button - Minimalist */}
-      <motion.button
-        initial={{ scale: 0, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        onClick={() => setIsOpen(true)}
-        className={`fixed bottom-6 right-6 w-12 h-12 rounded bg-[#111] text-[#EDEDED] border border-[#333] shadow-lg flex items-center justify-center z-50 transition-opacity ${isOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
-      >
-        <MascotIcon className="w-5 h-5" />
-      </motion.button>
+      <div className="fixed bottom-6 right-6 z-50 flex items-center justify-end">
+        <motion.button
+          id="tour-copilot"
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={() => {
+            setIsOpen(true);
+          }}
+          className={`w-12 h-12 rounded bg-[#111] text-[#EDEDED] border border-[#333] shadow-lg flex items-center justify-center transition-opacity ${isOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+        >
+          <MascotIcon className="w-5 h-5" />
+        </motion.button>
+      </div>
 
       {/* Chat Window - Monochrome/Notion Style */}
       <AnimatePresence>

@@ -40,7 +40,7 @@ export default function Dashboard() {
           />
         </div>
         
-        <div className="col-span-1 lg:col-span-3 border border-white/10 rounded-lg bg-black relative overflow-hidden flex flex-col shadow-inner">
+        <div id="tour-webhooks" className="col-span-1 lg:col-span-3 border border-white/10 rounded-lg bg-black relative overflow-hidden flex flex-col shadow-inner">
           <div className="p-4 border-b border-white/10 flex justify-between items-center relative z-10 bg-white/[0.02]">
             <h3 className="text-sm font-medium text-[#EDEDED] flex items-center gap-2"><Terminal className="w-4 h-4 text-[#888888]" /> Raw Webhook Terminal</h3>
             <div className="flex items-center gap-2">

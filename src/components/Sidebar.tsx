@@ -82,6 +82,7 @@ export default function Sidebar({ onClose }: { onClose?: () => void }) {
               return (
                 <Link
                   key={link.name}
+                  id={link.name === "Campaigns" ? "tour-campaigns" : undefined}
                   href={link.href}
                   onClick={() => { if (onClose) onClose(); }}
                   className={`flex items-center gap-3 px-3 py-1.5 rounded-md transition-all text-[13px] relative ${
